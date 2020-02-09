@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.9.RELEASE"
 	kotlin("jvm") version "1.3.61"
 	kotlin("plugin.spring") version "1.3.61"
+	id("com.google.cloud.tools.appengine") version "2.1.0" // 追加
 }
 
 group = "tokyo.masayuki"
@@ -23,6 +24,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
+	implementation("com.google.appengine:appengine-api-1.0-sdk:+")  // Latest App Engine Api's
 }
 
 tasks.withType<Test> {
@@ -33,5 +35,12 @@ tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
+	}
+}
+
+appengine {
+	deploy {
+		projectId = "simple-v1-api-masayuki"
+		version = "v1-0-0"
 	}
 }
